@@ -1,411 +1,169 @@
 
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { CalendarCheck, CalendarDays, CheckCircle, FileText, Heart, ShieldCheck, User, UserPlus, Users } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Index = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    // If user is already authenticated, redirect to dashboard
-    if (user) {
-      navigate("/dashboard");
-    }
-  }, [user, navigate]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-health-50 to-white">
-      {/* Header/Navigation */}
-      <header className="px-6 py-4 md:px-12 lg:px-20 flex items-center justify-between">
-        <div className="flex items-center">
-          <Heart className="h-8 w-8 text-health-600 mr-2" />
-          <span className="text-2xl font-bold text-health-800">HealthSync</span>
-        </div>
-        <nav className="hidden md:flex items-center space-x-8">
-          <a href="#features" className="text-gray-700 hover:text-health-700 transition-colors">
-            Features
-          </a>
-          <a href="#how-it-works" className="text-gray-700 hover:text-health-700 transition-colors">
-            How It Works
-          </a>
-          <a href="#testimonials" className="text-gray-700 hover:text-health-700 transition-colors">
-            Testimonials
-          </a>
-        </nav>
-        <div className="flex items-center space-x-4">
-          <Link to="/login">
-            <Button variant="outline" className="hidden md:flex">
-              Sign In
-            </Button>
-          </Link>
-          <Link to="/login">
-            <Button className="bg-health-600 hover:bg-health-700">
-              Get Started
-            </Button>
-          </Link>
-        </div>
-      </header>
-
+    <div className="min-h-screen flex flex-col bg-gray-50">
       {/* Hero Section */}
-      <section className="py-16 md:py-24 px-6 md:px-12 lg:px-20 text-center md:text-left md:flex items-center justify-between">
-        <div className="md:w-1/2 mb-10 md:mb-0">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
-            Modern Healthcare <br />
-            <span className="text-health-700">Appointment System</span>
-          </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-lg mx-auto md:mx-0">
-            Streamline your healthcare journey with our intuitive appointment
-            scheduling system designed for patients and healthcare providers.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
-            <Link to="/login">
-              <Button className="w-full sm:w-auto bg-health-600 hover:bg-health-700 text-lg px-8 py-6">
-                Schedule Appointment
-              </Button>
-            </Link>
-            <Link to="/login">
-              <Button variant="outline" className="w-full sm:w-auto text-lg px-8 py-6">
-                Provider Login
-              </Button>
-            </Link>
+      <div className="relative bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center">
+              <span className="text-2xl font-bold text-health-700">HealthSync</span>
+            </div>
+            <div className="flex items-center space-x-4">
+              {user ? (
+                <Link to="/dashboard">
+                  <Button variant="default">Dashboard</Button>
+                </Link>
+              ) : (
+                <>
+                  <Link to="/login">
+                    <Button variant="outline">Sign In</Button>
+                  </Link>
+                  <Link to="/register">
+                    <Button variant="default">Register</Button>
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
         </div>
-        <div className="md:w-1/2 flex justify-center md:justify-end">
-          <div className="relative">
-            <div className="absolute -top-6 -left-6 w-64 h-64 bg-health-100 rounded-full opacity-50"></div>
-            <div className="absolute -bottom-8 -right-8 w-40 h-40 bg-health-200 rounded-full opacity-50"></div>
-            <Card className="relative bg-white shadow-xl rounded-2xl overflow-hidden w-full max-w-md">
-              <div className="p-8">
-                <div className="bg-health-50 p-4 rounded-lg mb-6 flex justify-between items-center">
-                  <div>
-                    <p className="text-sm text-gray-500">Your next appointment</p>
-                    <p className="font-semibold text-gray-900">Dr. Emily Carter</p>
-                  </div>
-                  <CalendarCheck className="h-10 w-10 text-health-600" />
+
+        <div className="relative pt-12 pb-20 sm:pt-16 lg:pt-32 lg:pb-28">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              <div>
+                <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+                  Your Health, <span className="text-health-600">Our Priority</span>
+                </h1>
+                <p className="mt-6 text-xl text-gray-500">
+                  Schedule appointments with healthcare professionals seamlessly. HealthSync makes managing your medical appointments easy and stress-free.
+                </p>
+                <div className="mt-10 flex items-center gap-x-6">
+                  {user ? (
+                    <Link to="/appointments/new">
+                      <Button size="lg" className="px-8">
+                        Book an Appointment
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Link to="/register">
+                      <Button size="lg" className="px-8">
+                        Get Started
+                      </Button>
+                    </Link>
+                  )}
+                  <Link to="/doctors" className="text-base font-semibold leading-7 text-health-600">
+                    Browse Doctors <span aria-hidden="true">→</span>
+                  </Link>
                 </div>
-                <div className="space-y-4">
-                  <div className="flex items-center p-3 border rounded-lg">
-                    <CalendarDays className="h-5 w-5 text-health-600 mr-3" />
-                    <div>
-                      <p className="text-sm text-gray-500">Date</p>
-                      <p className="font-medium">Tomorrow, 10:30 AM</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center p-3 border rounded-lg">
-                    <User className="h-5 w-5 text-health-600 mr-3" />
-                    <div>
-                      <p className="text-sm text-gray-500">Doctor</p>
-                      <p className="font-medium">Dr. Emily Carter</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center p-3 border rounded-lg">
-                    <FileText className="h-5 w-5 text-health-600 mr-3" />
-                    <div>
-                      <p className="text-sm text-gray-500">Reason</p>
-                      <p className="font-medium">Annual check-up</p>
-                    </div>
-                  </div>
+              </div>
+              <div className="hidden md:block">
+                <img
+                  src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                  alt="Healthcare"
+                  className="rounded-lg shadow-xl"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Features */}
+      <div className="bg-white py-24 sm:py-32">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl lg:text-center">
+            <h2 className="text-base font-semibold leading-7 text-health-600">Healthcare Made Simple</h2>
+            <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+              Everything you need to manage your healthcare
+            </p>
+            <p className="mt-6 text-lg leading-8 text-gray-600">
+              HealthSync offers comprehensive tools for patients and healthcare providers to streamline appointment scheduling and record management.
+            </p>
+          </div>
+          <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
+            <div className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
+              <div className="relative pl-16">
+                <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-health-600 text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                  </svg>
                 </div>
-                <Button className="w-full mt-6 bg-health-600 hover:bg-health-700">
-                  View Details
+                <p className="text-base font-semibold leading-7 text-gray-900">Easy Appointment Scheduling</p>
+                <p className="mt-2 text-base leading-7 text-gray-600">Book appointments with your preferred healthcare providers in just a few clicks. Choose from available time slots and manage your schedule effortlessly.</p>
+              </div>
+              <div className="relative pl-16">
+                <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-health-600 text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                  </svg>
+                </div>
+                <p className="text-base font-semibold leading-7 text-gray-900">Find the Right Specialist</p>
+                <p className="mt-2 text-base leading-7 text-gray-600">Browse through our extensive network of qualified healthcare professionals. Filter by specialization to find the perfect match for your needs.</p>
+              </div>
+              <div className="relative pl-16">
+                <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-health-600 text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                  </svg>
+                </div>
+                <p className="text-base font-semibold leading-7 text-gray-900">Secure Medical Records</p>
+                <p className="mt-2 text-base leading-7 text-gray-600">Your medical history is securely stored and easily accessible when needed. Share information with healthcare providers efficiently and securely.</p>
+              </div>
+              <div className="relative pl-16">
+                <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-health-600 text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                  </svg>
+                </div>
+                <p className="text-base font-semibold leading-7 text-gray-900">Appointment Reminders</p>
+                <p className="mt-2 text-base leading-7 text-gray-600">Never miss an appointment again with our automated reminder system. Receive notifications before your scheduled visits.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA */}
+      <div className="bg-health-600">
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-24 lg:px-8 lg:flex lg:items-center lg:justify-between">
+          <h2 className="text-3xl font-extrabold tracking-tight text-white md:text-4xl">
+            <span className="block">Ready to take control of your healthcare?</span>
+            <span className="block text-health-100">Create your account today.</span>
+          </h2>
+          <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
+            <div className="inline-flex rounded-md shadow">
+              <Link to="/register">
+                <Button variant="default" size="lg" className="bg-white text-health-600 hover:bg-gray-100">
+                  Get Started
                 </Button>
-              </div>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section id="features" className="py-16 px-6 md:px-12 lg:px-20 bg-white">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Why Choose HealthSync
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Our platform offers a comprehensive solution for modern healthcare scheduling and management.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="p-6 border rounded-xl hover:shadow-md transition-shadow">
-            <div className="bg-health-100 h-12 w-12 rounded-full flex items-center justify-center mb-4">
-              <CalendarCheck className="h-6 w-6 text-health-600" />
+              </Link>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Easy Scheduling</h3>
-            <p className="text-gray-600">
-              Book appointments with your preferred healthcare providers in just a few clicks.
-            </p>
-          </div>
-
-          <div className="p-6 border rounded-xl hover:shadow-md transition-shadow">
-            <div className="bg-health-100 h-12 w-12 rounded-full flex items-center justify-center mb-4">
-              <Users className="h-6 w-6 text-health-600" />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Provider Network</h3>
-            <p className="text-gray-600">
-              Access a wide network of qualified healthcare professionals across various specialties.
-            </p>
-          </div>
-
-          <div className="p-6 border rounded-xl hover:shadow-md transition-shadow">
-            <div className="bg-health-100 h-12 w-12 rounded-full flex items-center justify-center mb-4">
-              <FileText className="h-6 w-6 text-health-600" />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Medical Records</h3>
-            <p className="text-gray-600">
-              Securely store and access your medical records and history in one place.
-            </p>
-          </div>
-
-          <div className="p-6 border rounded-xl hover:shadow-md transition-shadow">
-            <div className="bg-health-100 h-12 w-12 rounded-full flex items-center justify-center mb-4">
-              <ShieldCheck className="h-6 w-6 text-health-600" />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Privacy & Security</h3>
-            <p className="text-gray-600">
-              Your health information is protected with industry-leading security measures.
-            </p>
-          </div>
-
-          <div className="p-6 border rounded-xl hover:shadow-md transition-shadow">
-            <div className="bg-health-100 h-12 w-12 rounded-full flex items-center justify-center mb-4">
-              <UserPlus className="h-6 w-6 text-health-600" />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">For Providers</h3>
-            <p className="text-gray-600">
-              Healthcare providers can efficiently manage patient appointments and records.
-            </p>
-          </div>
-
-          <div className="p-6 border rounded-xl hover:shadow-md transition-shadow">
-            <div className="bg-health-100 h-12 w-12 rounded-full flex items-center justify-center mb-4">
-              <CheckCircle className="h-6 w-6 text-health-600" />
-            </div>
-            <h3 className="text-xl font-semibold mb-2">Reminders</h3>
-            <p className="text-gray-600">
-              Never miss an appointment with automated reminders and notifications.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section id="how-it-works" className="py-16 px-6 md:px-12 lg:px-20 bg-health-50">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            How It Works
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Our platform makes healthcare scheduling simple and efficient for everyone.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          <div className="bg-white p-8 rounded-xl shadow-md text-center">
-            <div className="bg-health-100 h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-6">
-              <UserPlus className="h-8 w-8 text-health-600" />
-            </div>
-            <div className="bg-health-600 text-white text-xl font-bold h-8 w-8 rounded-full flex items-center justify-center mx-auto mb-4">
-              1
-            </div>
-            <h3 className="text-xl font-semibold mb-3">Create Account</h3>
-            <p className="text-gray-600">
-              Sign up and create your personal health profile to get started.
-            </p>
-          </div>
-
-          <div className="bg-white p-8 rounded-xl shadow-md text-center">
-            <div className="bg-health-100 h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-6">
-              <User className="h-8 w-8 text-health-600" />
-            </div>
-            <div className="bg-health-600 text-white text-xl font-bold h-8 w-8 rounded-full flex items-center justify-center mx-auto mb-4">
-              2
-            </div>
-            <h3 className="text-xl font-semibold mb-3">Find Providers</h3>
-            <p className="text-gray-600">
-              Browse our network of healthcare professionals and specialties.
-            </p>
-          </div>
-
-          <div className="bg-white p-8 rounded-xl shadow-md text-center">
-            <div className="bg-health-100 h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-6">
-              <CalendarDays className="h-8 w-8 text-health-600" />
-            </div>
-            <div className="bg-health-600 text-white text-xl font-bold h-8 w-8 rounded-full flex items-center justify-center mx-auto mb-4">
-              3
-            </div>
-            <h3 className="text-xl font-semibold mb-3">Schedule Appointment</h3>
-            <p className="text-gray-600">
-              Select a convenient time slot and confirm your appointment.
-            </p>
-          </div>
-        </div>
-
-        <div className="text-center mt-12">
-          <Link to="/login">
-            <Button className="bg-health-600 hover:bg-health-700 text-lg px-8 py-6">
-              Get Started Now
-            </Button>
-          </Link>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section id="testimonials" className="py-16 px-6 md:px-12 lg:px-20 bg-white">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            What Our Users Say
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Hear from patients and healthcare providers who use our platform.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="bg-health-50 p-8 rounded-xl">
-            <p className="text-gray-700 mb-6">
-              "HealthSync has transformed how I manage my healthcare appointments. The platform is intuitive and saves me so much time!"
-            </p>
-            <div className="flex items-center">
-              <div className="bg-health-200 h-12 w-12 rounded-full flex items-center justify-center mr-4">
-                <User className="h-6 w-6 text-health-600" />
-              </div>
-              <div>
-                <p className="font-semibold">Sarah Johnson</p>
-                <p className="text-sm text-gray-500">Patient</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-health-50 p-8 rounded-xl">
-            <p className="text-gray-700 mb-6">
-              "As a healthcare provider, HealthSync has streamlined my practice management and reduced no-shows by over 40%."
-            </p>
-            <div className="flex items-center">
-              <div className="bg-health-200 h-12 w-12 rounded-full flex items-center justify-center mr-4">
-                <User className="h-6 w-6 text-health-600" />
-              </div>
-              <div>
-                <p className="font-semibold">Dr. James Rodriguez</p>
-                <p className="text-sm text-gray-500">Orthopedic Specialist</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-health-50 p-8 rounded-xl">
-            <p className="text-gray-700 mb-6">
-              "I love being able to access all my medical records in one place. The appointment scheduling process is so simple!"
-            </p>
-            <div className="flex items-center">
-              <div className="bg-health-200 h-12 w-12 rounded-full flex items-center justify-center mr-4">
-                <User className="h-6 w-6 text-health-600" />
-              </div>
-              <div>
-                <p className="font-semibold">Michael Wilson</p>
-                <p className="text-sm text-gray-500">Patient</p>
-              </div>
+            <div className="ml-3 inline-flex rounded-md shadow">
+              <Link to="/doctors">
+                <Button variant="outline" size="lg" className="bg-health-500 text-white border-health-400 hover:bg-health-400">
+                  View Doctors
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 px-6 md:px-12 lg:px-20 bg-health-600 text-white text-center">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Ready to Transform Your Healthcare Experience?
-          </h2>
-          <p className="text-xl text-health-50 mb-8">
-            Join thousands of patients and healthcare providers who trust HealthSync.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <Link to="/login">
-              <Button className="w-full sm:w-auto bg-white text-health-600 hover:bg-health-50 text-lg px-8 py-6">
-                Create Account
-              </Button>
-            </Link>
-            <Link to="/login">
-              <Button variant="outline" className="w-full sm:w-auto border-white text-white hover:bg-white/10 text-lg px-8 py-6">
-                Learn More
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
+      </div>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 px-6 md:px-12 lg:px-20">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-          <div>
-            <div className="flex items-center mb-4">
-              <Heart className="h-6 w-6 text-health-500 mr-2" />
-              <span className="text-xl font-bold">HealthSync</span>
-            </div>
-            <p className="text-gray-400">
-              Modern healthcare appointment scheduling system for patients and providers.
+      <footer className="bg-white">
+        <div className="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
+          <div className="mt-8 flex justify-center space-x-6">
+            <p className="text-center text-base text-gray-500">
+              &copy; 2023 HealthSync. All rights reserved.
             </p>
           </div>
-
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">Home</a>
-              </li>
-              <li>
-                <a href="#features" className="text-gray-400 hover:text-white transition-colors">Features</a>
-              </li>
-              <li>
-                <a href="#how-it-works" className="text-gray-400 hover:text-white transition-colors">How It Works</a>
-              </li>
-              <li>
-                <a href="#testimonials" className="text-gray-400 hover:text-white transition-colors">Testimonials</a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Legal</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">HIPAA Compliance</a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">Cookie Policy</a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-            <ul className="space-y-2">
-              <li className="text-gray-400">
-                support@healthsync.com
-              </li>
-              <li className="text-gray-400">
-                (555) 123-4567
-              </li>
-              <li className="text-gray-400">
-                123 Health Avenue, Medical District, CA 90210
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="border-t border-gray-800 pt-8 text-center">
-          <p className="text-gray-500">
-            &copy; {new Date().getFullYear()} HealthSync. All rights reserved.
-          </p>
         </div>
       </footer>
     </div>

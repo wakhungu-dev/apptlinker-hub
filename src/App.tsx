@@ -10,6 +10,7 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 // Pages
 import Index from "./pages/Index";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Appointments from "./pages/Appointments";
 import NewAppointment from "./pages/NewAppointment";
@@ -31,6 +32,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             
             <Route path="/dashboard" element={
               <DashboardLayout>

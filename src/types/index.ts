@@ -4,6 +4,9 @@ export interface User {
   email: string;
   role: 'patient' | 'doctor' | 'admin';
   name: string;
+  first_name?: string;
+  last_name?: string;
+  profile_id?: string;
   createdAt: string;
 }
 
@@ -22,8 +25,14 @@ export interface Specialization {
   name: string;
 }
 
-export interface Doctor extends User {
-  role: 'doctor';
+export interface Doctor {
+  id: string;
+  user: {
+    id: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+  };
   specializations: Specialization[];
   biography: string;
   availability: Availability[];

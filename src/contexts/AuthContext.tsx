@@ -1,11 +1,12 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { User } from "@/types";
+import { User, Patient } from "@/types";
 import { getCurrentUser, loginUser, logoutUser } from "@/lib/api";
 import { toast } from "@/hooks/use-toast";
 
 interface AuthContextType {
   user: User | null;
+  patientData: Patient | null;
   isLoading: boolean;
   error: string | null;
   login: (username: string, password: string) => Promise<void>;
@@ -16,6 +17,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [patientData, setPatientData] = useState<Patient | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,6 +27,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       try {
         const userData = await getCurrentUser();
         setUser(userData);
+        
+        // If user is a patient, set patient data
+        if (userData && userData.role === 'patient') {
+          // For now we're just using the same user data
+          // In a real app, we would fetch detailed patient data
+          setPatientData({
+            ...userData,
+            role: 'patient',
+            dateOfBirth: '',
+            phone: '',
+            address: '',
+            medicalHistory: []
+          });
+        }
       } catch (error) {
         console.error("Failed to fetch current user", error);
       } finally {
@@ -43,9 +59,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const userData = await loginUser(username, password);
       setUser(userData);
       
+      // If user is a patient, set patient data
+      if (userData && userData.role === 'patient') {
+        // For now we're just using the same user data
+        // In a real app, we would fetch detailed patient data
+        setPatientData({
+          ...userData,
+          role: 'patient',
+          dateOfBirth: '',
+          phone: '',
+          address: '',
+          medicalHistory: []
+        });
+      }
+      
       toast({
         title: "Login Successful",
-        description: `Welcome back, ${userData.first_name}!`,
+        description: `Welcome back, ${userData.first_name || userData.name}!`,
       });
     } catch (error) {
       console.error("Login error", error);
@@ -64,6 +94,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await logoutUser();
       setUser(null);
+      setPatientData(null);
       toast({
         title: "Logged Out",
         description: "You have been successfully logged out",
@@ -80,6 +111,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const value = {
     user,
+    patientData,
     isLoading,
     error,
     login: handleLogin,

@@ -101,11 +101,11 @@ const NewAppointment = () => {
 
     try {
       await createAppointment({
-        patient: user.profile_id,
-        doctor: selectedDoctor,
+        patientId: user.profile_id || "",
+        doctorId: selectedDoctor,
         date: selectedDate,
-        start_time: startTime.trim(),
-        end_time: endTime.trim(),
+        startTime: startTime.trim(),
+        endTime: endTime.trim(),
         reason: reason,
         status: "scheduled",
       });

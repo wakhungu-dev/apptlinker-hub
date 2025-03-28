@@ -1,8 +1,9 @@
+
 import { Appointment, Doctor, Patient, Specialization } from "@/types";
 import * as mockData from "./mock-data";
 
 const API_URL = "http://localhost:8000/api";
-const USE_MOCK = true; // Set to true to use mock data instead of real API
+const USE_MOCK = false; // Set to false to use real API instead of mock data
 
 // Helper function for API requests
 async function apiRequest(endpoint: string, options = {}) {
@@ -36,7 +37,7 @@ async function apiRequest(endpoint: string, options = {}) {
 // Mock API handler
 async function mockApiHandler(endpoint: string, options: any = {}) {
   // Parse the request body if it exists
-  let requestBody = {};
+  let requestBody: any = {};
   if (options.body) {
     try {
       requestBody = JSON.parse(options.body);

@@ -59,7 +59,7 @@ const Doctors = () => {
       const term = searchTerm.toLowerCase();
       results = results.filter(
         (doctor) =>
-          doctor.name.toLowerCase().includes(term) ||
+          `${doctor.user.first_name} ${doctor.user.last_name}`.toLowerCase().includes(term) ||
           doctor.specializations.some((spec) =>
             spec.name.toLowerCase().includes(term)
           ) ||
@@ -205,7 +205,7 @@ const Doctors = () => {
                   <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center border-4 border-white shadow-md mb-3">
                     <User className="h-10 w-10 text-health-700" />
                   </div>
-                  <h3 className="text-xl font-semibold text-center">{doctor.name}</h3>
+                  <h3 className="text-xl font-semibold text-center">Dr. {doctor.user.first_name} {doctor.user.last_name}</h3>
                   <div className="flex flex-wrap gap-1 justify-center mt-2">
                     {doctor.specializations.map((specialization) => (
                       <Badge

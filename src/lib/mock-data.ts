@@ -1,4 +1,3 @@
-
 import { Appointment, Doctor, Patient, Specialization, User } from "@/types";
 
 // Generate a random ID
@@ -46,6 +45,8 @@ export const users: User[] = [
     email: "doctor1@healthcare.com",
     role: "doctor",
     name: "Dr. Emily Carter",
+    first_name: "Emily",
+    last_name: "Carter",
     createdAt: "2023-01-05T00:00:00.000Z",
   },
   {
@@ -53,6 +54,8 @@ export const users: User[] = [
     email: "doctor2@healthcare.com",
     role: "doctor",
     name: "Dr. James Rodriguez",
+    first_name: "James",
+    last_name: "Rodriguez",
     createdAt: "2023-01-08T00:00:00.000Z",
   },
 ];
@@ -91,10 +94,12 @@ export const patients: Patient[] = [
 export const doctors: Doctor[] = [
   {
     id: "4",
-    email: "doctor1@healthcare.com",
-    role: "doctor",
-    name: "Dr. Emily Carter",
-    createdAt: "2023-01-05T00:00:00.000Z",
+    user: {
+      id: "4",
+      first_name: "Emily",
+      last_name: "Carter",
+      email: "doctor1@healthcare.com",
+    },
     specializations: [specializations[0], specializations[8]],
     biography:
       "Dr. Carter is a board-certified cardiologist with over 10 years of experience in diagnosing and treating heart conditions.",
@@ -124,10 +129,12 @@ export const doctors: Doctor[] = [
   },
   {
     id: "5",
-    email: "doctor2@healthcare.com",
-    role: "doctor",
-    name: "Dr. James Rodriguez",
-    createdAt: "2023-01-08T00:00:00.000Z",
+    user: {
+      id: "5",
+      first_name: "James",
+      last_name: "Rodriguez",
+      email: "doctor2@healthcare.com",
+    },
     specializations: [specializations[3], specializations[9]],
     biography:
       "Dr. Rodriguez specializes in orthopedic surgery and sports medicine, with a focus on minimally invasive procedures.",

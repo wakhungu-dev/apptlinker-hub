@@ -81,9 +81,9 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen flex flex-col">
       {/* Top navbar for mobile */}
-      <div className="bg-white shadow md:hidden flex items-center justify-between p-4">
+      <div className="bg-white bg-opacity-90 backdrop-blur-sm shadow md:hidden flex items-center justify-between p-4">
         <div className="flex items-center space-x-2">
           <span className="text-health-700 font-bold text-lg">HealthSync</span>
         </div>
@@ -100,7 +100,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         {/* Sidebar for desktop */}
         <aside
           className={cn(
-            "bg-white shadow-md fixed inset-y-0 left-0 z-50 transform transition-transform duration-200 ease-in-out",
+            "bg-white bg-opacity-90 backdrop-blur-sm shadow-md fixed inset-y-0 left-0 z-50 transform transition-transform duration-200 ease-in-out",
             "md:relative md:translate-x-0 flex flex-col w-64",
             isMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
           )}
@@ -157,7 +157,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         </aside>
 
         {/* Main content */}
-        <main className="flex-1 p-4 md:p-8 ml-0 md:ml-64">
+        <main className="flex-1 p-4 md:p-8 ml-0 md:ml-64 bg-white bg-opacity-75 backdrop-blur-sm rounded-lg shadow">
           {children}
         </main>
       </div>

@@ -36,14 +36,14 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+    <div className="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-health-700">HealthSync</h1>
-          <p className="mt-2 text-gray-600">Healthcare Appointment System</p>
+          <h1 className="text-3xl font-bold text-white">HealthSync</h1>
+          <p className="mt-2 text-white">Healthcare Appointment System</p>
         </div>
 
-        <Card>
+        <Card className="bg-white bg-opacity-85 backdrop-blur-md border-0 shadow-lg">
           <CardHeader>
             <CardTitle>Sign in to your account</CardTitle>
             <CardDescription>

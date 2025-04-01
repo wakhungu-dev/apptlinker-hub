@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { User, Patient } from "@/types";
 import { getCurrentUser, loginUser, logoutUser } from "@/lib/api";
@@ -10,6 +9,7 @@ interface AuthContextType {
   isLoading: boolean;
   error: string | null;
   login: (username: string, password: string) => Promise<void>;
+  loginWithGoogle: () => Promise<void>;
   logout: () => void;
 }
 
@@ -21,17 +21,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Load user from API on mount
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
         const userData = await getCurrentUser();
         setUser(userData);
         
-        // If user is a patient, set patient data
         if (userData && userData.role === 'patient') {
-          // For now we're just using the same user data
-          // In a real app, we would fetch detailed patient data
           setPatientData({
             ...userData,
             role: 'patient',
@@ -59,10 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const userData = await loginUser(username, password);
       setUser(userData);
       
-      // If user is a patient, set patient data
       if (userData && userData.role === 'patient') {
-        // For now we're just using the same user data
-        // In a real app, we would fetch detailed patient data
         setPatientData({
           ...userData,
           role: 'patient',
@@ -83,6 +76,53 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       toast({
         title: "Login Failed",
         description: "Invalid username or password",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleLoginWithGoogle = async () => {
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      const response = await fetch('/api/auth/google', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error('Google authentication failed');
+      }
+      
+      const userData = await response.json();
+      setUser(userData);
+      
+      if (userData && userData.role === 'patient') {
+        setPatientData({
+          ...userData,
+          role: 'patient',
+          dateOfBirth: '',
+          phone: '',
+          address: '',
+          medicalHistory: []
+        });
+      }
+      
+      toast({
+        title: "Google Login Successful",
+        description: `Welcome, ${userData.first_name || userData.name}!`,
+      });
+    } catch (error) {
+      console.error("Google login error", error);
+      setError("Google authentication failed");
+      toast({
+        title: "Google Login Failed",
+        description: "Could not authenticate with Google",
         variant: "destructive",
       });
     } finally {
@@ -115,6 +155,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     isLoading,
     error,
     login: handleLogin,
+    loginWithGoogle: handleLoginWithGoogle,
     logout: handleLogout,
   };
 

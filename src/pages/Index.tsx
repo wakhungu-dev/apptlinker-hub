@@ -7,13 +7,13 @@ const Index = () => {
   const { user } = useAuth();
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col">
       {/* Hero Section */}
-      <div className="relative bg-white overflow-hidden">
+      <div className="relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
-              <span className="text-2xl font-bold text-health-700">HealthSync</span>
+              <span className="text-2xl font-bold text-white">HealthSync</span>
             </div>
             <div className="flex items-center space-x-4">
               {user ? (
@@ -23,7 +23,7 @@ const Index = () => {
               ) : (
                 <>
                   <Link to="/login">
-                    <Button variant="outline">Sign In</Button>
+                    <Button variant="outline" className="bg-white bg-opacity-85 text-health-700 hover:bg-opacity-100">Sign In</Button>
                   </Link>
                   <Link to="/register">
                     <Button variant="default">Register</Button>
@@ -38,10 +38,10 @@ const Index = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div>
-                <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
-                  Your Health, <span className="text-health-600">Our Priority</span>
+                <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+                  Your Health, <span className="text-health-100">Our Priority</span>
                 </h1>
-                <p className="mt-6 text-xl text-gray-500">
+                <p className="mt-6 text-xl text-white">
                   Schedule appointments with healthcare professionals seamlessly. HealthSync makes managing your medical appointments easy and stress-free.
                 </p>
                 <div className="mt-10 flex items-center gap-x-6">
@@ -58,7 +58,7 @@ const Index = () => {
                       </Button>
                     </Link>
                   )}
-                  <Link to="/doctors" className="text-base font-semibold leading-7 text-health-600">
+                  <Link to="/doctors" className="text-base font-semibold leading-7 text-white hover:text-health-100">
                     Browse Doctors <span aria-hidden="true">→</span>
                   </Link>
                 </div>
@@ -76,7 +76,7 @@ const Index = () => {
       </div>
 
       {/* Features */}
-      <div className="bg-white py-24 sm:py-32">
+      <div className="bg-white bg-opacity-85 backdrop-blur-md py-24 sm:py-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
             <h2 className="text-base font-semibold leading-7 text-health-600">Healthcare Made Simple</h2>
@@ -131,7 +131,7 @@ const Index = () => {
       </div>
 
       {/* CTA */}
-      <div className="bg-health-600">
+      <div className="bg-health-600 bg-opacity-85 backdrop-blur-md">
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-24 lg:px-8 lg:flex lg:items-center lg:justify-between">
           <h2 className="text-3xl font-extrabold tracking-tight text-white md:text-4xl">
             <span className="block">Ready to take control of your healthcare?</span>
@@ -157,7 +157,7 @@ const Index = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-white">
+      <footer className="bg-white bg-opacity-85 backdrop-blur-md">
         <div className="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
           <div className="mt-8 flex justify-center space-x-6">
             <p className="text-center text-base text-gray-500">

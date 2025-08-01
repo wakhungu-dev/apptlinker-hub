@@ -1,7 +1,7 @@
 
-# HealthSync - Healthcare Appointment Scheduling System
+# AppointmentLinker Hub - Healthcare Appointment Scheduling System
 
-HealthSync is a comprehensive healthcare appointment scheduling system built with React, Django, and Tailwind CSS. The application allows patients to register, find doctors, book appointments, and manage their medical records.
+AppointmentLinker Hub is a comprehensive healthcare appointment scheduling system built with React, Node.js, MongoDB, and Tailwind CSS. The application allows patients to register, find doctors, book appointments, and manage their medical records.
 
 ## Features
 
@@ -14,18 +14,18 @@ HealthSync is a comprehensive healthcare appointment scheduling system built wit
 
 ## Tech Stack
 
-- **Frontend**: React, Tailwind CSS, React Router, React Query
-- **Backend**: Django, Django REST Framework
-- **Database**: SQLite (development), PostgreSQL (recommended for production)
-- **API Documentation**: Swagger/OpenAPI
+- **Frontend**: React, TypeScript, Tailwind CSS, Vite
+- **Backend**: Node.js, Express.js, TypeScript
+- **Database**: MongoDB with Mongoose
+- **Authentication**: JSON Web Tokens (JWT)
+- **State Management**: React Context API
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js (v14+)
-- Python (v3.8+)
-- pip
+- MongoDB (local or MongoDB Atlas)
 - npm or yarn
 
 ### Setting Up the Backend

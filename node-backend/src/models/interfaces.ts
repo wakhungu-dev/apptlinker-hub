@@ -26,8 +26,13 @@ export interface IPatient extends Document {
   address: string;
   insuranceProvider?: string;
   insuranceId?: string;
+  medicalHistory?: string;
+  allergies?: string;
+  bloodType?: string;
   createdAt: Date;
   updatedAt: Date;
+  // Method for decrypting fields
+  getDecrypted(field: string): string | null;
 }
 
 // Doctor interface
@@ -43,8 +48,10 @@ export interface IDoctor extends Document {
 export interface IAvailability extends Document {
   doctor: IDoctor['_id'];
   day: string;
+  date: string;
   startTime: Date;
   endTime: Date;
+  isBooked: boolean;
 }
 
 // Appointment interface

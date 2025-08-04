@@ -1,6 +1,6 @@
-import * as express from 'express';
+import express from 'express';
 import { Request, Response, NextFunction } from 'express';
-import * as cors from 'cors';
+import cors from 'cors';
 import routes from './routes';
 import connectDb from './config/database';
 

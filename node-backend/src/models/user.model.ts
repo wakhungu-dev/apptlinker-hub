@@ -69,4 +69,28 @@ UserSchema.methods.comparePassword = async function (candidatePassword: string):
   }
 };
 
-export default mongoose.model<IUser>('User', UserSchema);
+// Static method to find user by credentials
+UserSchema.statics.findByCredentials = async function(email: string, password: string): Promise<IUser | null> {
+  // Find user by email
+  const user = await this.findOne({ email });
+  
+  if (!user) {
+    return null;
+  }
+  
+  // Check password
+  const isMatch = await user.comparePassword(password);
+  
+  if (!isMatch) {
+    return null;
+  }
+  
+  return user;
+};
+
+// Add static methods to the model's interface
+interface UserModel extends mongoose.Model<IUser> {
+  findByCredentials(email: string, password: string): Promise<IUser | null>;
+}
+
+export default mongoose.model<IUser, UserModel>('User', UserSchema);

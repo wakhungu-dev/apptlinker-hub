@@ -12,6 +12,10 @@ const AvailabilitySchema: Schema = new Schema({
     enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
     required: true,
   },
+  date: {
+    type: String,
+    required: true,
+  },
   startTime: {
     type: Date,
     required: true,
@@ -19,6 +23,10 @@ const AvailabilitySchema: Schema = new Schema({
   endTime: {
     type: Date,
     required: true,
+  },
+  isBooked: {
+    type: Boolean,
+    default: false
   },
 });
 

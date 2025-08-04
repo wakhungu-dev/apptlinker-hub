@@ -14,16 +14,23 @@ export class UserController extends BaseController<IUser> {
   // Register a new user
   register = async (req: Request, res: Response): Promise<Response> => {
     try {
-      const { email, password, role, firstName, lastName } = req.body;
+      const { username, email, password, role, firstName, lastName } = req.body;
       
       // Check if email already exists
       const existingUser = await User.findOne({ email });
       if (existingUser) {
         return res.status(400).json({ error: 'User with this email already exists' });
       }
+      
+      // Check if username already exists
+      const existingUsername = await User.findOne({ username });
+      if (existingUsername) {
+        return res.status(400).json({ error: 'Username is already taken' });
+      }
 
       // Create a new user
       const newUser = await User.create({
+        username,
         email,
         password, // password will be hashed by the pre-save hook
         role,

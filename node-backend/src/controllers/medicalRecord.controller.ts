@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import MedicalRecord from '../models/medicalRecord.model';
 import { BaseController } from './base.controller';
-import { IMedicalRecord } from '../models/interfaces';
+import { IMedicalRecord, IPatient, IDoctor, IAppointment } from '../models/interfaces';
 import { AuthRequest } from '../types/express';
 import Patient from '../models/patient.model';
 import Doctor from '../models/doctor.model';
@@ -158,15 +159,32 @@ export class MedicalRecordController extends BaseController<IMedicalRecord> {
         // Patient can only access their own records
         const patientProfile = await Patient.findOne({ user: userId });
         
-        if (!patientProfile || !record.patient.equals(patientProfile._id)) {
+        if (!patientProfile) {
+          return res.status(403).json({ error: 'Not authorized to access this record' });
+        }
+        
+        // Use string comparison instead of object methods to avoid typing issues
+        const patientId = String(patientProfile._id);
+        const recordPatientId = String(record.patient);
+        
+        if (patientId !== recordPatientId) {
           return res.status(403).json({ error: 'Not authorized to access this record' });
         }
       } else if (userRole === 'doctor') {
         // Doctors can access records of appointments they had with patients
         if (record.appointment) {
           const doctorProfile = await Doctor.findOne({ user: userId });
+          const appointment = await Appointment.findById(record.appointment);
           
-          if (!doctorProfile || !record.appointment.doctor.equals(doctorProfile._id)) {
+          if (!doctorProfile || !appointment) {
+            return res.status(403).json({ error: 'Not authorized to access this record' });
+          }
+          
+          // Use string comparison instead of object methods to avoid typing issues
+          const doctorId = String(doctorProfile._id);
+          const appointmentDoctorId = String(appointment.doctor);
+          
+          if (doctorId !== appointmentDoctorId) {
             return res.status(403).json({ error: 'Not authorized to access this record' });
           }
         } else {
@@ -204,8 +222,18 @@ export class MedicalRecordController extends BaseController<IMedicalRecord> {
       }
       
       // Check if this record is associated with an appointment for this doctor
-      if (record.appointment && !record.appointment.doctor.equals(doctorProfile._id)) {
-        return res.status(403).json({ error: 'Not authorized to update this record' });
+      if (record.appointment) {
+        const appointment = await Appointment.findById(record.appointment);
+        if (!appointment) {
+          return res.status(403).json({ error: 'Not authorized to update this record' });
+        }
+        
+        const doctorId = String(doctorProfile._id);
+        const appointmentDoctorId = String(appointment.doctor);
+        
+        if (doctorId !== appointmentDoctorId) {
+          return res.status(403).json({ error: 'Not authorized to update this record' });
+        }
       }
       
       // Update the record

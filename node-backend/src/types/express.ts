@@ -11,4 +11,8 @@ export interface UserProfile {
   firstName?: string;
   lastName?: string;
   email?: string;
+  username?: string;
+  role?: 'patient' | 'doctor' | 'admin';
+  createdAt?: Date;
+  updatedAt?: Date;
 }
